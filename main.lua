@@ -22,12 +22,29 @@
 --]]
 
 function love.load()
+   -- Playable
    hero = {}
    hero.x = 300
    hero.y = 550
    hero.speed = 50
    hero.jump = 100
+
+   -- Aliens
+   aliens = {}
+   for i = 0,7 do
+      alien = {}
+      alien.width = 40
+      alien.height = 20
+      alien.x = i * (alien.width + 60) + 100
+      alien.y = alien.height + 100
+      alien.speed = 50
+      alien.origin = alien.x + (alien.width / 2)
+      table.insert(aliens, alien)
+   end
+
 end
+
+
 
 function love.update(dt)
    if love.keyboard.isDown("left") then
@@ -42,7 +59,20 @@ function love.update(dt)
       hero.y = hero.y + hero.jump * dt
    end
 
+   -- Alien Movement
+   for i,v in ipairs (aliens) do
+      if v.x > v.origin + 20 then
+         v.x = v.x - v.speed * dt
+      elseif v.x + v.width - 20 < v.origin then
+         v.x = v.x + v.speed * dt
+      else
+         v.x = v.x + v.speed * dt
+      end
+   end -- for
+
 end -- update
+
+
 
 function love.draw()
    -- The Ground
@@ -52,4 +82,11 @@ function love.draw()
    -- The Movable
    love.graphics.setColor(255, 255, 0, 255)
    love.graphics.rectangle("fill", hero.x, hero.y, 30, 15)
+
+   -- Aliens
+   love.graphics.setColor(0, 255, 255, 255)
+   for i,v in ipairs(aliens) do
+      love.graphics.rectangle("fill", v.x, v.y, v.width, v.height)
+   end
+
 end --draw
