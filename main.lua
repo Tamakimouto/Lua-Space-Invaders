@@ -38,6 +38,7 @@ function love.load()
       alien.x = i * (alien.width + 60) + 100
       alien.y = alien.height + 100
       alien.speed = 50
+      alien.dir = -1
       alien.origin = alien.x + (alien.width / 2)
       table.insert(aliens, alien)
    end
@@ -62,12 +63,12 @@ function love.update(dt)
    -- Alien Movement
    for i,v in ipairs (aliens) do
       if v.x > v.origin + 20 then
-         v.x = v.x - v.speed * dt
+         alien.dir = alien.dir * -1
       elseif v.x + v.width - 20 < v.origin then
-         v.x = v.x + v.speed * dt
-      else
-         v.x = v.x + v.speed * dt
+         alien.dir = alien.dir * -1
       end
+
+      v.x = v.x + alien.dir * v.speed * dt
    end -- for
 
 end -- update
