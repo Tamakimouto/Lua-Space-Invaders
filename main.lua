@@ -63,12 +63,12 @@ function love.update(dt)
    -- Alien Movement
    for i,v in ipairs (aliens) do
       if v.x > v.origin + 20 then
-         alien.dir = alien.dir * -1
+         v.dir = v.dir * -1
       elseif v.x + v.width - 20 < v.origin then
-         alien.dir = alien.dir * -1
+         v.dir = v.dir * -1
       end
 
-      v.x = v.x + alien.dir * v.speed * dt
+      v.x = v.x + v.dir * v.speed * dt
    end -- for
 
 end -- update
@@ -91,3 +91,21 @@ function love.draw()
    end
 
 end --draw
+
+
+
+function love.keypressed(key)
+   if key == "escape" then
+      love.event.quit()
+   end
+
+   if key == " " then
+      shoot();
+   end
+end
+
+
+
+function shoot()
+
+end
